@@ -39,9 +39,13 @@ You should see the following page:
 <img alt="Initial screen" src=".github/images/screenshot1.png">
 
 Here is the text with some improvements for clarity and readability:
-Write some English text into the first text area. After one second, it will start translating to Italian and the results will appear in the second text area. Immediately after that, the Italian text from the second text area will start translating back to English in the third text area.
-The idea behind this is that it allows you to compare the "validity" of the Italian translation. If the reverse English translation is not very different from the initial message, the Italian translation is likely accurate.
+
+Write some English text into the first text area. After one second, it will start translating to Italian and the results will appear in the second text area.
+Immediately after that, the Italian text from the second text area will start translating back to English in the third text area.
+**The idea behind this is that it allows you to compare the "validity" of the Italian translation.**
+If the reverse English translation is not very different from the initial message, the Italian translation is likely accurate.
 If there are significant differences, you can either change the initial English text or fine-tune the Italian translation.
+
 Of course, this can be done with any combination of languages, not just English and Italian. Select the desired language combinations from those offered in the corresponding text area.
 
 ## Live demo
@@ -52,5 +56,6 @@ Open the console and start `ollama` with the following command:
 OLLAMA_ORIGINS=https://golom.it OLLAMA_HOST=0.0.0.0 ollama serve
 ```
 This allows your browser to permit local requests from the specific host. It does not break any of your security settings and does not allow anyone else to access your machine. It is just for you.
-After that, open your browser and navigate to the page `https://golom.it/ReverseLingo`.
+After that, open your browser and navigate to the page [https://golom.it/ReverseLingo](https://golom.it/ReverseLingo).
+
 That's it.
