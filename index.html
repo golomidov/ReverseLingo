@@ -1,0 +1,698 @@
+<!-- 
+  TESTEMONALS:
+    1. Icons are from https://remixicon.com
+    2. Some design values are taken from https://picocss.com
+ -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon"
+    href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAFBlWElmTU0AKgAAAAgAAgESAAMAAAABAAEAAIdpAAQAAAABAAAAJgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAGKADAAQAAAABAAAAGAAAAADw6FuzAAABWWlUWHRYTUw6Y29tLmFkb2JlLnhtcAAAAAAAPHg6eG1wbWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLyIgeDp4bXB0az0iWE1QIENvcmUgNi4wLjAiPgogICA8cmRmOlJERiB4bWxuczpyZGY9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkvMDIvMjItcmRmLXN5bnRheC1ucyMiPgogICAgICA8cmRmOkRlc2NyaXB0aW9uIHJkZjphYm91dD0iIgogICAgICAgICAgICB4bWxuczp0aWZmPSJodHRwOi8vbnMuYWRvYmUuY29tL3RpZmYvMS4wLyI+CiAgICAgICAgIDx0aWZmOk9yaWVudGF0aW9uPjE8L3RpZmY6T3JpZW50YXRpb24+CiAgICAgIDwvcmRmOkRlc2NyaXB0aW9uPgogICA8L3JkZjpSREY+CjwveDp4bXBtZXRhPgoZXuEHAAAAqElEQVRIDe1V2wqAIAzV6P+/rb6oUnCMg2fMpU8lCHOXc0mhlP41+AWOp/8a3GWGrgyVAh5ZiCMYuhAFb2Aaq+XSJtGiAFm1C6yhBFfvLAeFDHe9fFSpVaHiyDnvkanODBVqEeAQ4rrczroDJJez5cClUJBIYBGQkW6airEI3t5BfaYWQVcqSVIxukBtElBMayypLX9FyBp1gTjUwSkVf2D+cPwwn+28ATScIfgY8piAAAAAAElFTkSuQmCC">
+  <title>ReverseLingo: interface for two-way local LLM translation</title>
+  <meta name="theme-color" content="#ffffff">
+  <style>
+    body {
+      min-height: 100%;
+      border: 0;
+      padding: 0;
+      margin: 0;
+      font: 1em sans-serif;
+      box-sizing: border-box;
+
+      @media screen and (min-width: 768px) {
+        .container {
+          width: 76%;
+        }
+      }
+
+      .nice-shadow {
+        box-shadow: rgba(129, 145, 181, 0.017) 0.2755px 0.551px 3.306px 0px, rgba(129, 145, 181, 0.024) 0.6365px 1.273px 7.638px 0px, rgba(129, 145, 181, 0.03) 1.1875px 2.375px 14.25px 0px, rgba(129, 145, 181, 0.036) 2.1375px 4.275px 25.65px 0px, rgba(129, 145, 181, 0.043) 3.9615px 7.923px 47.538px 0px, rgba(129, 145, 181, 0.06) 9.5px 19px 114px 0px, rgba(129, 145, 181, 0.015) 0px 0px 0px 1.1875px;
+      }
+
+      i.icon {
+        &.settings {
+          background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' width='24' height='24' fill='currentColor'%3E%3Cpath fill='none' d='M0 0h24v24H0z'%3E%3C/path%3E%3Cpath d='M5.32943 3.27152C6.56252 2.83314 7.9923 3.10743 8.97927 4.0944C10.1002 5.21531 10.3019 6.90735 9.5843 8.23378L20.293 18.9436L18.8788 20.3579L8.16982 9.64869C6.84325 10.3668 5.15069 10.1653 4.02952 9.04415C3.04227 8.0569 2.7681 6.62659 3.20701 5.39326L5.44373 7.62994C6.02952 8.21572 6.97927 8.21572 7.56505 7.62994C8.15084 7.04415 8.15084 6.0944 7.56505 5.50862L5.32943 3.27152ZM15.6968 5.15506L18.8788 3.38729L20.293 4.80151L18.5252 7.98349L16.7574 8.33704L14.6361 10.4584L13.2219 9.04415L15.3432 6.92283L15.6968 5.15506ZM8.97927 13.2868L10.3935 14.701L5.09018 20.0043C4.69966 20.3948 4.06649 20.3948 3.67597 20.0043C3.31334 19.6417 3.28744 19.0698 3.59826 18.6773L3.67597 18.5901L8.97927 13.2868Z'%3E%3C/path%3E%3C/svg%3E");
+        }
+
+        display: block;
+        margin: 3px 0px 3px 10px;
+        width: 24px;
+        height: 24px;
+      }
+
+      .container {
+        border: none;
+        margin: auto;
+
+        &.hidden {
+          display: none;
+        }
+
+        select {
+          display: inline-block;
+          background-color: #dfdfdf;
+          font-size: 1rem;
+          padding: 5px 20px;
+          margin-left: 20px;
+          border-radius: 5px;
+          border: 1px solid transparent;
+        }
+
+        nav {
+          border: none;
+          display: flex;
+          justify-content: center;
+          margin-top: 2rem;
+        }
+
+        h1 {
+          text-align: center;
+          padding-top: 5px;
+          margin: 0px;
+        }
+
+        fieldset {
+          input[type=textarea] {
+            font-size: 1.2rem;
+            padding: 0.5rem;
+            border: none;
+          }
+
+          label {
+            margin-right: 2rem;
+          }
+
+          margin-top: 2rem;
+          padding-top: 1rem;
+          border: none;
+        }
+
+        .pane {
+          border: none;
+          margin-top: 2rem;
+          padding-top: 1rem;
+
+          &[dirty] {
+            textarea {
+              background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='lavender'%3E%3Cpath fill='none' d='M0 0h24v24H0z'%3E%3C/path%3E%3Cpath d='M4 2H20V6.45994L13.5366 12L20 17.5401V22H4V17.5401L10.4634 12L4 6.45994V2ZM16.2967 7L18 5.54007V4H6V5.54007L7.70326 7H16.2967ZM12 13.3171L6 18.4599V20H7L12 17L17 20H18V18.4599L12 13.3171Z'%3E%3C/path%3E%3C/svg%3E");
+            }
+          }
+
+          textarea {
+            &[disabled] {
+              color: #cfcfcf;
+              cursor: wait;
+              background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='lavender'%3E%3Cpath fill='none' d='M0 0h24v24H0z'%3E%3C/path%3E%3Cpath d='M6.41421 15.89L16.5563 5.74785L15.1421 4.33363L5 14.4758V15.89H6.41421ZM7.24264 17.89H3V13.6473L14.435 2.21231C14.8256 1.82179 15.4587 1.82179 15.8492 2.21231L18.6777 5.04074C19.0682 5.43126 19.0682 6.06443 18.6777 6.45495L7.24264 17.89ZM3 19.89H21V21.89H3V19.89Z'%3E%3C/path%3E%3C/svg%3E");
+            }
+
+            font-size: 1.2rem;
+            padding: 0.5rem;
+            height: calc(1/5 * 100vh);
+            overflow: scroll;
+            margin: 0.5rem;
+            width: calc(100% - 2px - 2rem);
+            border: 1px solid transparent;
+            border-radius: 3px;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: 120px;
+          }
+        }
+      }
+
+      .error {
+        background-color: red;
+        width: 50%;
+        margin: auto;
+        padding: 5rem;
+        display: none;
+      }
+    }
+  </style>
+</head>
+
+<body>
+<div class="container">
+  <nav>
+    <h1>ReverseLingo</h1>
+    <div><select name="model" onchange="Settings.OnChangeHandle();"></select></div>
+    <div>
+      <a href="#" onclick="Settings.Toggle(this); return;"><i class="icon settings"></i></a>
+    </div>
+  </nav>
+</div>
+
+<style>
+  [name=settings] {
+    dl {
+      display: flex; 
+      dt {
+        flex-grow: 1;
+        label {
+          width: 100%; 
+          padding-top: 6px;
+          padding-bottom: 6px;
+          display: inline-block;
+          text-align: center;
+          font-size: 1rem;
+          border-radius: 5px;
+          cursor: pointer;
+          
+
+          &:has(input:checked) {
+            background-color: #dfdfdf;
+          }
+          input {
+            display: none;
+          }
+        }
+      }
+    }
+    .setting {
+      display: none;
+      width: 100%;
+      &.active {
+        display: table;
+      }
+      .row {
+        display: table-row;
+        input[type=text] {
+          font-size: 1.2rem;
+          width: 95%;
+        }
+        textarea {
+          font-size: 1.2rem;
+          width: 95%;
+        }
+        div:has(label) {
+          min-width: 20%;
+          label {
+            display: block;
+            font-size: 1.2rem;
+            margin: 5px;
+          }
+        }
+        div {
+          display: table-cell;
+          vertical-align: top;
+        }
+      }
+    }
+  }
+</style>
+<div class="container hidden" name="settings"></div>
+<script>
+  class Settings {
+    static OnChangeHandle() {
+      let event = window.event;
+      const { name, value } = event.target;
+      let settingsPane = event.target.closest("fieldset")
+      switch (name) {
+        case "engine":
+          for (let el of settingsPane.querySelectorAll(".setting.active")) {
+            el.classList.remove("active")
+          }
+          let el = settingsPane.querySelector(".setting#"+value)
+          el.classList.add("active")
+          localStorage.setItem(`engine`, value)
+          break;
+
+        case "model":
+          localStorage.setItem(`model`, value);
+          break
+      
+        default:
+          localStorage.setItem(name, value)
+          break;
+      }
+      const chevent = new CustomEvent('settingchanged', {detail: {name: name, value: value}});
+      document.dispatchEvent(chevent);
+    }
+
+    static Toggle(el) {
+      let settingsPane = document.querySelector('[name=settings]');
+      let form = settingsPane.querySelector("form");
+      if (!form) {
+        form = document.createElement("form")
+        let engines = [
+          OllamaLLMAdapter, 
+        ]
+        let menuInnerHTML = ""
+        for (let engine of engines) {            
+          menuInnerHTML += `<dt><label><input type="radio" name="engine" value="${engine.Engine}">${engine.Engine}</label></dt>`
+        }
+        let settingsInnerHTML = ""
+        for (let engine of engines) {
+          let fields = engine.GetFields()
+          settingsInnerHTML += `<div id="${engine.Engine}" class="setting">`
+          for (let field of fields) {
+            let defaults = engine.GetDefaultSettings()
+            let field_name = engine.Engine + `_` + field.name;
+            let value = localStorage.getItem(field_name) ?? defaults[field.name]
+            settingsInnerHTML += `<div class="row"><div><label for="${field_name}">${field.label}</label></div><div>`
+            switch (field.type) {
+              case "text":
+                settingsInnerHTML += `<input type="${field.type}" id="${field_name}" name="${field_name}" placeholder="${defaults[field.name]}" value="${value}"/>`
+                break;
+              case "textarea":
+                settingsInnerHTML += `<textarea rows="5" id="${field_name}" name="${field_name}" placeholder="${defaults[field.name]}">${value}</textarea>`
+                break;
+              default:
+                console.error("unsupported field type", field.type)
+                return;
+            }
+            settingsInnerHTML += "</div></div>"
+        }
+          settingsInnerHTML += "</div>"
+        }
+        form.innerHTML = `<fieldset><dl>${menuInnerHTML}</dl>${settingsInnerHTML}</fieldset>`
+        settingsPane.append(form)
+        form.onchange = Settings.OnChangeHandle;
+
+        // instantiate
+        let q = document.querySelector(`dl dt input[value=${engines[0].Engine}]`)
+        q.click()
+      }
+      settingsPane.classList.toggle('hidden');
+    }
+  }
+</script>
+
+<div id="error" class="error"></div>
+
+<div id="threepane" class="container">
+  <section class="pane nice-shadow">
+    <select name="language">
+      <option value="English">English</option>
+      <option value="Italian">Italiano</option>
+      <option value="Spanish">Español</option>
+      <option value="Chinese">中文</option>
+      <option value="Russian">Русский</option>
+      <option value="French">Français</option>
+      <option value="German">Deutsch</option>
+      <option value="Portuguese">Português</option>
+    </select>
+    <textarea name="text" spellcheck="true" autocorrect="true"></textarea>
+  </section>
+</div>
+
+<script>
+  // --------------------------------------------------------------------------
+  class LLMAdapter {
+    constructor(params = { url: null, model: null }) {
+      if (params.url) {
+        this.SetSetting("url", params.url);
+      }
+      if (params.model) {
+        this.SetSetting("model", params.model);
+      }
+    }
+
+    GetModels() { throw "not implemented" }
+    Generate() { throw "not implemented" }
+
+    SetSetting(name, value) {
+      localStorage.setItem(name, value)
+    }
+
+    Engine = () => {
+      // make sure static Engine and class name is aligned with this approach
+      return this.constructor.name.toLowerCase().replace(/llmadapter/, '');
+    };
+
+    _buildPrompt(params) {
+      let prompt = this.GetSetting("prompt");
+      for (let s of ["fromLanguage", "toLanguage"]) {
+        prompt = prompt.replaceAll(`{${s}}`, params[s])
+      }
+      prompt = prompt.replace(`{phrase}`, params.phrase);
+      return prompt;
+    }
+  }
+</script>
+<script>
+  // --------------------------------------------------------------------------
+  class OllamaLLMAdapter extends LLMAdapter {
+    static Engine = "ollama"
+
+    static GetDefaultSettings() {
+      return {
+        url: "http://localhost:11434",
+        prompt: "You are a professional translator from {fromLanguage} to {toLanguage}. I will provide a phrase in {fromLanguage}. Please translate the phrase accurately into {toLanguage} and provide only the translated text, without any additional explanation, commentary or formatting. Phrase to translate: {phrase}",
+        model: "llama3:latest",
+        fromLanguage: "English",
+        toLanguage: "Italian",
+      }
+    }
+
+    static GetFields() {
+      return [
+        { name: "url", label: "API URL", type: "text"},
+        { name: "prompt", label: "Prompt", type: "textarea"},
+      ]
+    }
+    GetSetting(name) { 
+      return localStorage.getItem(this.Engine() + "_" + name) 
+        ?? localStorage.getItem(name) 
+        ?? OllamaLLMAdapter.GetDefaultSettings()[name]; 
+    }
+
+    GetModels() {
+      return fetch(this.GetSetting("url") + '/api/tags', {
+        method: "GET",
+        cache: "no-cache",
+      })
+    }
+
+    Generate(params) {
+      const prompt = this._buildPrompt(params)
+
+      return fetch(this.GetSetting("url") + '/api/generate', {
+        method: "POST",
+        cache: "no-cache",
+        body: JSON.stringify({
+          model: this.GetSetting("model"),
+          prompt: prompt,
+          stream: false,
+          options: {
+            temperature: 0,
+          },
+        })
+      });
+    }
+  }
+</script>
+<script>
+  // --------------------------------------------------------------------------
+  class ReverseLingo {
+    // special helper function to save previous value
+    // language previousValue we need for conflicting choices
+    // text previousValue for handle just navigation around textarea, or quick rollbacks
+    focusInHandler = (event) => {
+      const { name, value } = event.target;
+      if (!["language", "text"].includes(name)) return
+      event.target.dataset["previousValue"] = value;
+    }
+
+    selectChangeHandler = (event) => {
+      const { name, value } = event.target;
+      if (name !== "language") return;
+
+      const languageSelects = Array.from(this.threepaneEl.querySelectorAll("select[name=language]"));
+      const paneChanged = languageSelects.findIndex(p => p === event.target);
+      const previousLanguage = languageSelects[paneChanged].dataset["previousValue"]
+      var languages = languageSelects.map((el) => el.value);
+      console.assert(languages.length == this.numberOfPanes, "should be %d language panes. currently have ", this.numberOfPanes, languages)
+
+      // we need specific handling of corner case, so no algo here
+      switch (paneChanged) {
+        case 0:
+          if (languages[0] === languages[1]) {
+            languages[1] = previousLanguage;
+          }
+          if (previousLanguage === languages[2]) {
+            languages[2] = languages[0];
+          }
+          break;
+
+        case 1:
+          if (languages[0] === languages[1]) {
+            if (languages[0] === languages[2]) {
+              languages[0] = previousLanguage;
+              languages[2] = previousLanguage;
+            } else {
+              languages[0] = previousLanguage;
+            }
+          } else if (languages[2] === languages[1]) {
+            languages[2] = previousLanguage;
+          }
+          break;
+
+        case 2:
+          if (languages[1] === languages[2]) {
+            languages[1] = previousLanguage;
+          }
+          break;
+      }
+
+      this.llmAdapter.SetSetting("fromLanguage", languages[0])
+      this.llmAdapter.SetSetting("toLanguage", languages[1])
+
+      languageSelects.forEach((select, n) => {
+        select.value = languages[n];
+        this.updatePanePlaceholder(n);
+      });
+      // hack to call focus for next change
+      event.target.blur();
+
+      let pane = event.target.closest(".pane");
+      // if changed first pane - no need to translate it
+      if (paneChanged === 0) {
+        pane = pane.nextElementSibling;
+      }
+      while (pane) {
+        this.markDirty(pane);
+        pane = pane.nextElementSibling;
+      }
+    }
+
+    textAreaKeyUPHandler = (event) => {
+      const { name, value } = event.target;
+      if (name !== "text") return;
+
+      let pane = event.target.closest(".pane").nextElementSibling;
+      const isMarkDirty = value !== event.target.dataset["previousValue"]
+      while (pane) {
+        isMarkDirty ? this.markDirty(pane) : this.unmarkDirty(pane);
+        pane = pane.nextElementSibling;
+      }
+    }
+
+    startScheduler() {
+      return setInterval(() => {
+        const disabledTextarea = document.querySelector(".pane textarea[disabled]");
+        if (disabledTextarea) return;
+
+        const dirtyPanes = document.querySelectorAll(".pane[dirty]");
+        if (!dirtyPanes.length) return;
+
+        const now = Date.now();
+        const canProcess = Array.from(dirtyPanes).every(pane => now - parseInt(pane.getAttribute("dirty"), 10) >= 2000);
+
+        if (canProcess) {
+          this.processPane(dirtyPanes[0]);
+        }
+      }, 1000);
+    }
+
+    // TODO (roman): move this into Settings
+    async updateModels() {
+      try {
+        let sel = document.querySelector("nav div select")
+        if (!sel) {
+          console.error("invalid design")
+        }
+
+        const response = await this.llmAdapter.GetModels()
+
+        const data = await response.json()
+        sel.innerHTML = ""
+        for (let m of data.models) {
+          let lel = document.createElement("option")
+          lel.value = m.model
+          if (m.model == this.llmAdapter.GetSetting("model")) {
+            lel.selected = true
+          }
+          lel.appendChild(document.createTextNode(m.model))
+          sel.options.add(lel)
+        }
+      } catch (error) {
+        this.displayError(error)
+      }
+    }
+
+    initializeView() {
+      for (let np = 0; np < this.numberOfPanes; np++) {
+        let pane = this.threepaneEl.querySelector(".pane")
+        if (np > 0) {
+          pane = this.threepaneEl.appendChild(pane.cloneNode(true))
+        }
+
+        // reset text after reload page
+        let textarea = pane.querySelector("textarea")
+        textarea.value = ""
+        textarea.onkeyup = this.textAreaKeyUPHandler.bind(this);
+
+        let language = pane.querySelector("select[name=language]")
+        if (np == 1) {
+          language.value = this.llmAdapter.GetSetting("toLanguage");
+        } else {
+          language.value = this.llmAdapter.GetSetting("fromLanguage");
+        }
+        language.onchange = this.selectChangeHandler.bind(this);
+        language.addEventListener("focusin", this.focusInHandler);
+      }
+      // should be done after, as there is a difference from total number of panes, which is not known during the initialization
+      for (let np = 0; np < this.numberOfPanes; np++) {
+        this.updatePanePlaceholder(np);
+      }
+    }
+
+    constructor(llmAdapter) {
+      this.numberOfPanes = 3
+      this.llmAdapter = llmAdapter
+      this.threepaneEl = document.querySelector("#threepane")
+
+      this.updateModels()
+      this.initializeView()
+
+      document.addEventListener("settingchanged", this.settingChanged.bind(this));
+
+      this.startScheduler()
+    }
+
+    settingChanged(ev) {
+      let needRefresh = false;
+      switch (ev.detail.name) {
+        case "engine":
+          if (this.llmAdapter.Engine() != ev.detail.value) {
+            // TODO (roman): implement this change after implementing other engines
+          }
+          ev.stopPropagation()      
+          break;
+
+        case "model":
+          ev.stopPropagation()
+          needRefresh = true;
+          break
+
+        case ev.detail.name.match(/_url$/)?.input:
+          ev.stopPropagation();
+          this.hideError();
+          this.updateModels();
+          break
+
+        case ev.detail.name.match(/_prompt$/)?.input:
+          ev.stopPropagation()
+          needRefresh = true;
+          break
+
+        default:
+          console.error("unknown setting changed", ev.detail.name, ev.detail.value)
+          break;
+      }
+
+      if (needRefresh) {
+        let pane = this.threepaneEl.querySelector(".pane").nextElementSibling;
+        while (pane) {
+          this.markDirty(pane);
+          pane = pane.nextElementSibling;
+        }
+      }
+    }
+
+    displayError(error) {
+      this.threepaneEl.style.display = "none";
+      let errDiv = document.querySelector("#error")
+      let messageHTML = `<h1>Error:</h1><p>${error.message}</p>`
+      switch (error.name) {
+        case "TypeError":
+          messageHTML += `<p>* Check if ollama is up and running on ${this.ollamaBackend}</p>`
+          break;
+
+        case "SyntaxError":
+          messageHTML += `<p>* Check if ollama is up and running on ${this.ollamaBackend} and properly functioning</p>`
+          break;
+
+        default:
+          messageHTML += `<p>* WTF? ${error.name}</p>`
+          break;
+      }
+      errDiv.innerHTML = messageHTML
+      errDiv.style.display = "block"
+    }
+    hideError() {
+      this.threepaneEl.style.display = "block";
+      let errDiv = document.querySelector("#error");
+      errDiv.style.display = "none";
+    }
+
+    markDirty(el) {
+      el.setAttribute("dirty", Date.now());
+    }
+
+    unmarkDirty(el) {
+      el.removeAttribute("dirty");
+    }
+
+    // processPane translates from the previous pane language to the current pane language
+    async processPane(el) {
+      const phraseTextarea = el.previousElementSibling.querySelector("textarea");
+      const phrase = phraseTextarea.value.trim();
+      phraseTextarea.dataset["previousValue"] = phraseTextarea.value;
+
+      if (!phrase) {
+        this.unmarkDirty(el);
+        return;
+      }
+      const outputTextarea = el.querySelector("textarea");
+      outputTextarea.setAttribute("disabled", new Date().valueOf());
+      const languages = Array.from(document.querySelectorAll(".pane select[name=language]")).map(l => l.value);
+      languages.push(languages[0]);
+      const paneIndex = Array.from(document.querySelectorAll(".pane")).findIndex(p => el.isEqualNode(p));
+
+      try {
+        const response = await this.llmAdapter.Generate(
+          {
+            fromLanguage: languages[paneIndex - 1],
+            toLanguage: languages[paneIndex],
+            phrase: phrase
+          });
+
+        const data = await response.json();
+        outputTextarea.removeAttribute("disabled");
+        outputTextarea.value = data.response;
+      } catch (error) {
+        this.displayError(error)
+      } finally {
+        this.unmarkDirty(el);
+      }
+    }
+
+    // updatePanePlaceholder is UIX improvement function - writing help to the proper panes
+    updatePanePlaceholder(paneN) {
+      const pane = this.threepaneEl.querySelector(`.pane:nth-of-type(${paneN + 1})`);
+      const language = pane.querySelector("select[name=language]").value;
+      const textArea = pane.querySelector("textarea[name=text]");
+
+      if (paneN === 0) {
+        textArea.setAttribute("placeholder", `Write from scratch or paste here the text in the ${language} language`);
+        return;
+      }
+
+      const firstLanguage = this.threepaneEl.querySelector(".pane:nth-of-type(1) select[name=language]").value;
+      let placeholderText = `Here would be the translation of the previous text to ${language}`;
+
+      if (!pane.nextElementSibling) {
+        if (language === firstLanguage) {
+          placeholderText += ". It should be similar to the initial text. If it's very different, make changes to the previous texts accordingly.";
+        }
+      } else {
+        placeholderText += ". You can change it.";
+      }
+
+      textArea.setAttribute("placeholder", placeholderText);
+    }
+  }
+
+</script>
+
+<script>
+  new ReverseLingo(new OllamaLLMAdapter());
+</script>
+
+</body>
+
+</html>
