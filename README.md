@@ -11,7 +11,7 @@ Interface for two-way translation process, translating your text to the target l
 ## Installation
 
 The simplest way to use this app is to run `ollama` locally on you machine.
-If you don't have a local `ollama` installed yet, please, follow their [instructions](https://github.com/ollama/ollama) to install it. 
+If you don't have a local `ollama` installed yet, please, follow their [instructions](https://github.com/ollama/ollama) to install it. `REQUIRED ollama >= v0.1.42`
 
 Next, you can download the `index.html` file from this repository
 ```sh
@@ -24,21 +24,9 @@ or, clone the entire repository to a directory on your local machine (`ReverseLi
 git clone https://github.com/golomidov/ReverseLingo.git
 cd ReverseLingo
 ```
-
-Next, you can start within or point any web server to this directory.
-Simplest way is to try any suitable receipts from [here](https://www.devdungeon.com/content/one-line-http-servers).
-
-For example, if you choose Ruby, then just run
-```sh
-ruby -run -e httpd
-```
-and open with your browser the following local address [http://127.0.0.1:8080](http://127.0.0.1:8080)
-
-You should see the following page:
+Then, just open `index.html` in browser and you should see the following page:
 
 <img alt="Initial screen" src=".github/images/screenshot1.png">
-
-Here is the text with some improvements for clarity and readability:
 
 Write some English text into the first text area. After one second, it will start translating to Italian and the results will appear in the second text area.
 Immediately after that, the Italian text from the second text area will start translating back to English in the third text area.
@@ -53,9 +41,9 @@ If you have a local `ollama` installation, you can try the whole process with al
 However, first, you need to modify the way `ollama` is started.
 Open the console and start `ollama` with the following command:
 ```sh
-OLLAMA_ORIGINS=https://golom.it OLLAMA_HOST=0.0.0.0 ollama serve
+OLLAMA_ORIGINS=https://golomidov.github.io OLLAMA_HOST=0.0.0.0 ollama serve
 ```
 This allows your browser to permit local requests from the specific host. It does not break any of your security settings and does not allow anyone else to access your machine. It is just for you.
-After that, open your browser and navigate to the page [https://golom.it/ReverseLingo](https://golom.it/ReverseLingo).
+After that, open your browser and navigate to the page [https://golomidov.github.io/ReverseLingo/](https://golomidov.github.io/ReverseLingo/).
 
 That's it.
