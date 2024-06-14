@@ -344,6 +344,7 @@
         model: "llama3:latest",
         fromLanguage: "English",
         toLanguage: "Italian",
+        temperature: 0,
       }
     }
 
@@ -351,8 +352,10 @@
       return [
         { name: "url", label: "API URL", type: "text"},
         { name: "prompt", label: "Prompt", type: "textarea"},
+        { name: "temperature", label: "Temperature", type: "text"},
       ]
     }
+    
     GetSetting(name) { 
       return localStorage.getItem(this.Engine() + "_" + name) 
         ?? localStorage.getItem(name) 
@@ -377,7 +380,7 @@
           prompt: prompt,
           stream: false,
           options: {
-            temperature: 0,
+            temperature: parseFloat(this.GetSetting("temperature")) || 0,
           },
         })
       });
@@ -574,13 +577,13 @@
           this.updateModels();
           break
 
-        case ev.detail.name.match(/_prompt$/)?.input:
+        default:
+          let strippedName = ev.detail.name.replace(this.llmAdapter.Engine() + "_",'')
+          if (!this.llmAdapter.constructor.GetFields().find((f) => { return f.name === strippedName; })) {
+            console.error("unknown setting changed", ev.detail.name, ev.detail.value)
+          }
           ev.stopPropagation()
           needRefresh = true;
-          break
-
-        default:
-          console.error("unknown setting changed", ev.detail.name, ev.detail.value)
           break;
       }
 
